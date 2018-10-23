@@ -7,7 +7,7 @@ float getBrightness(cv::Mat &in) {
     cv::Mat hsv;
     cv::cvtColor(in, hsv, cv::COLOR_BGR2HSV);
     cv::Scalar brightness = cv::sum(hsv);
-    return brightness.val[2];
+    return (float) brightness.val[2];
 }
 
 void adjustBrightness(cv::Mat &in, float bMean) {
@@ -24,12 +24,12 @@ void showHist(const char *windowName, cv::Mat &in) {
     const float *histRange = {range};
     bool uniform = true;
     bool accumulate = false;
-    cv::calcHist(&bgr_planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
-    cv::calcHist(&bgr_planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
-    cv::calcHist(&bgr_planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+    cv::calcHist(&bgr_planes[0], 1, nullptr, cv::Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
+    cv::calcHist(&bgr_planes[1], 1, nullptr, cv::Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
+    cv::calcHist(&bgr_planes[2], 1, nullptr, cv::Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
 
     int hist_w = 512, hist_h = 400;
-    int bin_w = cvRound((double)hist_w / histSize);
+    int bin_w = cvRound((double) hist_w / histSize);
     cv::Mat histImage(hist_h, hist_w, CV_8UC3, cv::Scalar(0, 0, 0));
     cv::normalize(b_hist, b_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
     cv::normalize(g_hist, g_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
