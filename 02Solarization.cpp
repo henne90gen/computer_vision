@@ -16,32 +16,19 @@
 #include <functional>
 #include <queue>
 
-using namespace cv;
-using namespace std;
+//using namespace cv;
+//using namespace std;
 
 #define MaxPoints 2
 int nb_points = 0;
 
-Mat MapCurveimage512;
-Mat image, mapped_result_img;
-Point SrcPtInt[MaxPoints];
-
-void help() {
-    cout <<
-         "\nTU Dresden, Inf, CV1 Ex2, Holger Heidrich\n"
-         "This program plays with colors simulating solarisation.\n"
-         "Clicking two times into the \"GreyCurve\"-image gives two points.\n"
-         "Make these points be the extremals of a polynomial of degree three in the range 0..255 x 0..255.\n"
-         "The \"GreyCurve\"-image itself has size (512,512). Point (0,0) is upper left corner. \n"
-         "Use the polynomial y(x) to map values x of the input image to values y of an output image.\n"
-         "Saturate to 0 and 255 if the mapped grey / color values exceed these values. \n"
-         "Call:\n"
-         "./image Image [image-name Default: fruits.jpg]\n" << endl;
-}
+cv::Mat MapCurveimage512;
+cv::Mat image, mapped_result_img;
+cv::Point SrcPtInt[MaxPoints];
 
 void on_mouse(int event, int mouseX, int mouseY, int, void *) {
     switch (event) {
-        case EVENT_LBUTTONDOWN: {
+        case cv::EVENT_LBUTTONDOWN: {
             // add new point to polygon
             if (nb_points < MaxPoints) {
                 SrcPtInt[nb_points].x = mouseX;
@@ -62,7 +49,7 @@ void on_mouse(int event, int mouseX, int mouseY, int, void *) {
                     float b = (float) (-3.0 / 2.0 * dy / dx);
                     float c = (float) ((y1 + y2) / 2.0 + b * x0);
 
-                    Mat lookupTable = Mat(1, 256, CV_8U);
+                    cv::Mat lookupTable(1, 256, CV_8U);
                     for (int x = 0; x < 256; x++) {
                         float newX = (float) x * 2.0f;
                         float base = newX - x0;
@@ -103,25 +90,22 @@ void on_mouse(int event, int mouseX, int mouseY, int, void *) {
 }
 
 int main(int argc, char **argv) {
-    help();
-
-//    char *filename = argc == 3 ? argv[1] : (char *) "images//fruits.jpg";
     const char *filename = "../left.jpg";
-    image = imread(filename, 1);
+    image = cv::imread(filename, 1);
     mapped_result_img = image.clone();
 
-    namedWindow("GreyCurve");
-    namedWindow("Fruits!");
+    cv::namedWindow("GreyCurve");
+    cv::namedWindow("Fruits!");
     imshow("Fruits!", mapped_result_img);
 
     MapCurveimage512.create(512, 512, CV_8U);
     MapCurveimage512 = 0;
     imshow("GreyCurve", MapCurveimage512);
 
-    setMouseCallback("GreyCurve", on_mouse, 0);
+    cv::setMouseCallback("GreyCurve", on_mouse, 0);
 
     while (true) {
-        if (waitKey(0) == 27) break;
+        if (cv::waitKey(0) == 27) break;
     }
 
     return 0;
