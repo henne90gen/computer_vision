@@ -16,9 +16,6 @@
 #include <iostream>
 #include <queue>
 
-// using namespace cv;
-// using namespace std;
-
 #define MaxPoints 2
 int nb_points = 0;
 
