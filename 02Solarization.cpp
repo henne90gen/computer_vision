@@ -41,6 +41,11 @@ cv::Mat createLookupTable() {
         float base = newX - x0;
         int y = (int)(a * base * base * base - b * newX + c);
         y /= 2;
+        if (y < 0) {
+            y = 0;
+        } else if (y > 255) {
+            y = 255;
+        }
         lookupTable.data[x] = (uchar)y;
     }
     return lookupTable;
