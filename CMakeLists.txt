@@ -13,6 +13,9 @@ target_link_libraries( Solarization ${OpenCV_LIBS} )
 add_executable( OrientationHistograms 03OrientationHistograms.cpp )
 target_link_libraries( OrientationHistograms ${OpenCV_LIBS} )
 
+add_executable( Sampling 04Sampling.cpp )
+target_link_libraries( Sampling ${OpenCV_LIBS} )
+
 # file(GLOB FILES "*.cpp")
 # 
 # foreach(SOURCE_FILE ${FILES})

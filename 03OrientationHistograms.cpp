@@ -10,6 +10,7 @@
 int main(int argc, char **argv) {
     const char *filename = "../keyb7.jpg";
     // const char *filename = "../bar.png";
+    // const char *filename = "../lines1.png";
     cv::Mat original = cv::imread(filename);
 
     cv::cvtColor(original, original, cv::COLOR_BGR2GRAY);
