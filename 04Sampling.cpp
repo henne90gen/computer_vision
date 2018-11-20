@@ -21,7 +21,9 @@
  *      filtering with sinc filter causes sine wave patterns to appear
  *      disadvantage: dropoff is much slower than with a Gaussian filter
  *      a) discrete values from the sinc-function
+ *          -> always 0, except for point (0,0)
  *      b) sampling the sinc-function on a floating point grid (between points)
+ *          -> alternating positive and negative numbers (ringing artefacts)
  *
  * 3.4)
  *      remove all frequencies that are higher than we can sample
@@ -148,8 +150,8 @@ void applySincBetweenGrid(cv::Mat src, cv::Mat &dst) {
 int main(int argc, char **argv) {
     // showSobel();
     cv::Mat bar;
-    generateBar(bar, 100, 300, 100, 100);
-    // generateStripes(bar, 1);
+    // generateBar(bar, 100, 300, 100, 100);
+    generateStripes(bar, 1);
 
     imshow("Bar", bar);
 
